@@ -2,7 +2,7 @@
 from django.db import models
 
 class Restaurant(models.Model):
-    rname = models.CharField(max_length=255, unique=True)
+    rname = models.CharField(max_length=255,blank=True,null=True,default='not Found')
     raddress = models.TextField()
 
     def __str__(self):
@@ -45,12 +45,11 @@ class Payment(models.Model):
     packing_charges = models.DecimalField(max_digits=8, decimal_places=2)
     # platform_fee = models.DecimalField(max_digits=8, decimal_places=2,default=0.00)
     platform_fee = models.DecimalField(max_digits=8, decimal_places=2,null=True,blank=True, default=0 )
-    delivery_partner_fee = models.DecimalField(max_digits=8, decimal_places=2)
+    delivery_partner_fee = models.DecimalField(max_digits=8, decimal_places=2)  
     discount_applied = models.DecimalField(max_digits=8, decimal_places=2)
     taxes = models.DecimalField(max_digits=8, decimal_places=2)
     order_total = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f"Payment for Order {self.order.order_number} - {self.payment_method}"
-
 

@@ -124,27 +124,30 @@ def extract_order_summary(soup):
 
     for row in rows:
         # Check for summary items
-        if 'Item Total' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Item Total'] = float(value) if value else 0.0
-        elif 'Order Packing Charges' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Order Packing Charges'] = float(value) if value else 0.0
-        elif 'Delivery partner fee' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Delivery partner fee'] = float(value) if value else 0.0
-        elif 'Discount Applied' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Discount Applied'] = -float(value) if value else 0.0
-        elif 'Taxes' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Taxes'] = float(value) if value else 0.0
-        elif 'Platform fee' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Platform fee'] = float(value) if value else 0.0
-        elif 'Order Total' in row.text:
-            value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
-            summary_details['Order Total'] = float(value) if value else 0.0
+        try:
+            if 'Item Total' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Item Total'] = float(value) if value else 0.0
+            elif 'Order Packing Charges' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Order Packing Charges'] = float(value) if value else 0.0
+            elif 'Delivery partner fee' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Delivery partner fee'] = float(value) if value else 0.0
+            elif 'Discount Applied' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Discount Applied'] = -float(value) if value else 0.0
+            elif 'Taxes' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Taxes'] = float(value) if value else 0.0
+            elif 'Platform fee' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Platform fee'] = float(value) if value else 0.0  
+            elif 'Order Total' in row.text:
+                value = row.find_all('td')[-1].text.strip().replace('₹', '').replace(',', '').replace('-', '').replace('₹\xa0', '').strip()
+                summary_details['Order Total'] = float(value) if value else 0.0
+        except:
+            pass
 
     return summary_details
 

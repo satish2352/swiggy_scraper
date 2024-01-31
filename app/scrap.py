@@ -20,7 +20,7 @@ from .info_functions import  (
 # Define the SCOPES. If modifying it, delete the token.pickle file.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
-count=0
+
 def extract_message_body(parts):
     body_text = ""
     body_html = ""
@@ -38,6 +38,7 @@ def extract_message_body(parts):
 
 
 def getEmails():
+    count=0
     data_obj = []
     creds = None
     if os.path.exists('token.pickle'):
@@ -68,7 +69,6 @@ def getEmails():
     for msg in messages:
         # Get the message from its id
         txt = service.users().messages().get(userId='me', id=msg['id']).execute()
-        count = 0
         # Use try-except to avoid any Errors
         try:
             # Get value of 'payload' from dictionary 'txt'
@@ -89,16 +89,17 @@ def getEmails():
             if parts:
                 body_text, body_html = extract_message_body(parts)
 
-                if 'swiggy' in subject.lower() or count!=0:
+                count += 1
+                print(count)
+                if 'swiggy' in subject.lower():
                     print("Subject: ", subject)
                     print("From: ", sender)
+                    
 
-
-                    count += 1
-                    print(count)
                     order_info_dict ={}
                     soup = BeautifulSoup(body_html, 'html.parser')
 
+                    # print(extract_order_summary(soup))
                     order_info_dict['order_data'] = get_order_info(soup)
                     order_info_dict['restaurant'] = get_restaurant_info(soup)
                     order_info_dict['customer_info']= get_customer_info(soup)

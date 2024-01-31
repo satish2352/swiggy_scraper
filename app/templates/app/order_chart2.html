@@ -1,0 +1,35 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>char</title>
+    {% comment %} <link rel="stylesheet" href="{% static "app/css/style.css" %}"> {% endcomment %}
+</head>
+<body>
+    <h1>chart page2</h1>
+    <div>
+        <canvas
+        id="myChart"
+        width="400"
+        height="400"
+        aria-label="chart"
+        role="img"
+      ></canvas>
+      </div>
+
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+
+
+{{ chart_data|json_script:"chart_data" }}
+{% comment %} <script src="{% static 'mypage.js' %}"></script> {% endcomment %}
+
+<script src="{% static "orderapp/js/script2.js" %}"></script>
+
+</html>
